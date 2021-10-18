@@ -7,7 +7,7 @@ Author: Natalie Kelly [aut, cre],
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-Depends: R (>= 3.4), geosphere, mvbutils, zoo, stringr, dsm
+Depends: R (>= 3.4), geosphere, mvbutils, zoo, stringr, dsm, tidyr
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true

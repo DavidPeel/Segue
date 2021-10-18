@@ -4,7 +4,7 @@ plot.segue <- function(segueObj,stratum=NULL, along.track.dist.m  , lwd=3, xlab=
 
   segueObj_el <- ExtractASegue(segueObj, stratum=stratum, along.track.dist.m)
 
-  segdata <- segueObj$segment.data # Just to save typing
+  segdata <- segueObj_el$segment.data # Just to save typing
 
   plot(range(segdata$lon.start, segdata$lon.end) , range(segdata$lat.start, segdata$lat.end), type='n', xlab=xlab, ylab=ylab, ...)
 
@@ -15,11 +15,13 @@ plot.segue <- function(segueObj,stratum=NULL, along.track.dist.m  , lwd=3, xlab=
   else
   {
     id<-segdata[,plotattribute]
-    id<-cut(id, breaks=seq(min(id),max(d),length.out=ncols), labels=FALSE)
-    cols<-colmap(ncols)[id]
+    id[!is.na(id)]<-cut(id[!is.na(id)], breaks=seq(min(id,na.rm=T),max(id,na.rm=T),length.out=ncols), labels=FALSE)
+    id[is.na(id)]<-0
+    id<-id+1
+    cols<-c('gray',colmap(ncols))[id]
   }
 
-  segments(segdata$lon.start, segdata$lat.start, segdata$lon.end, segdata$lat.end, cols=cols, lwd=lwd)
+  segments(segdata$lon.start, segdata$lat.start, segdata$lon.end, segdata$lat.end, col=cols, lwd=lwd)
 
   if (addsightings)
   {

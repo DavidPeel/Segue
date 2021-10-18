@@ -33,6 +33,7 @@ MakeSegue <- function(sightings, effort, trunc.dist=3000, truncate_sdata=T, alon
   library( geosphere)
   library( zoo)
   library( stringr)
+  library(tidyr)
 
 
   # Process DATA -----------------------------------------------------------
@@ -62,8 +63,8 @@ MakeSegue <- function(sightings, effort, trunc.dist=3000, truncate_sdata=T, alon
   effort.2rows$Transect.alt<- paste( effort.2rows$Transect.old, effort.2rows$Migration, sep="_") #create a new transect name that will appear in both sightings and effort data, and one that separates out north and south migration
 
 
-  ans<-list(segment.data=list(), observation.data=list(), rawdata=list())
-
+  #ans<-list(segment.data=list(), observation.data=list(), rawdata=list())
+  ans<-list()
 
   segment.summaries.all<-list()
   unique.segment.no<-list()
@@ -84,13 +85,13 @@ MakeSegue <- function(sightings, effort, trunc.dist=3000, truncate_sdata=T, alon
 
     # MATCHING SIGHTINGS AND EFFORT -----------------------------------------------------------
     #match sightings at  segment level
-    unique.segment.no <- unlist(lapply( sightings$sighting.no.unique, segment.no.per.sighting.f, segment.summary = segment.summaries.all[[iname]],
+    unique.segment.no <- unlist(lapply( sightings$sighting.no.unique, segment.no.per.sighting.f, segment.summary = segment.summaries.all,
                                                 sighting.data = sightings, sighting.no.col = sighting.no.col, date.time.col = date.time.col))
     datacolm <- paste0('unique.segment.no.',idist,'m')
-    sightings[ ,datacolm]<- unique.segment.no[[iname]]
+    sightings[ ,datacolm]<- unique.segment.no
 
     # SUMMARISE SEGMENTS -----------------------------------------------------------
-    summarise.sightings.at <- summarise.sightings.at.segment.f( segment.data = segment.summaries.all[[iname]], sighting.summary.data = sightings,
+    summarise.sightings.at <- summarise.sightings.at.segment.f( segment.data = segment.summaries.all, sighting.summary.data = sightings,
                                                                         sighting.summary.data.column = datacolm, trunc.dist = trunc.dist, size.name = size.name)
 
     ans[[iname]]$segment.data <- cbind( segment.summaries.all, summarise.sightings.at)
