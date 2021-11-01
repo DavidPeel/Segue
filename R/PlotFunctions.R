@@ -32,3 +32,4 @@ plot.segue <- function(segueObj,stratum=NULL, along.track.dist.m  , lwd=3, xlab=
   }
 
 }
+

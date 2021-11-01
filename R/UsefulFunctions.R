@@ -1,8 +1,8 @@
-dsm_a_segueObj <- function(segueObj, stratum=NULL, along.track.dist.m  ,
+dsm_a_segueObj <- function(segueObj, along.track.dist.m  ,
                            formula, ddf.obj, engine = "gam",
                            convert.units = 1, family = quasipoisson(link = "log"), group = FALSE,
                            control = list(keepData = TRUE), availability = 1, strip.width = NULL,
-                           segment.area = NULL, weights = NULL, transect = "line", method = "REML",
+                           segment.area = NULL, weights = NULL, transect = "line", method = "REML", stratum=NULL,
                            ...)
 {
   library(dsm)

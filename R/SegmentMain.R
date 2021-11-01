@@ -535,11 +535,14 @@ transect.segmentation.f<- function( effort.dataset, transect.sub.name, lon.col, 
             ans.df<-  data.frame( strata.cols.df, global.transect.no, global.transect.sub.no, unique.segment.no, Transect.alt, lon.start, lat.start, datetime.start, lon.mid, lat.mid, datetime.mid, lon.end, lat.end, datetime.end, segment.length.m,effort.status)} else if ( length(enviro.covars)>0&&length( strata.cols)==0) {
 
               enviro.covars.mean.df<- as.data.frame( segment.data.i[1,match(enviro.covars, colnames(segment.data.i))])
-              colnames( enviro.covars.mean.df)<- paste( enviro.covars, ".mean", sep="")
-
+              # DP Hack to sync with DSM
+              #colnames( enviro.covars.mean.df)<- paste( enviro.covars, ".mean", sep="")
+              colnames( enviro.covars.mean.df)<- enviro.covars
               ans.df<-  data.frame(global.transect.no, global.transect.sub.no, unique.segment.no, Transect.alt, lon.start, lat.start, datetime.start, lon.mid, lat.mid, datetime.mid, lon.end, lat.end, datetime.end, segment.length.m, enviro.covars.mean.df, effort.status)} else{
                 enviro.covars.mean.df<- as.data.frame( segment.data.i[1,match(enviro.covars, colnames(segment.data.i))])
-                colnames( enviro.covars.mean.df)<- paste( enviro.covars, ".mean", sep="")
+                # DP Hack to sync DSM
+                # colnames( enviro.covars.mean.df)<- paste( enviro.covars, ".mean", sep="")
+                colnames( enviro.covars.mean.df)<-  enviro.covars
                 strata.cols.df<- as.data.frame( effort.dataset.trans[1, match(strata.cols, colnames(effort.dataset.trans))])
                 colnames( strata.cols.df)<- strata.cols
 
