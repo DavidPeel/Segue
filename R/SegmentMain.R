@@ -3,8 +3,8 @@
 
 
 MakeSegue <- function(sightings, effort, trunc.dist=3000, truncate_sdata=T, along.track.dist.m=c(2000,5000,10000),
-                        strata.cols =  c(), enviro.covars = c(), lon.col = "Lon", lat.col = "Lat", datetime.col = "date.time",   #strata.cols = c("Area","Migration"),
-                        sighting.no.col = "sighting.no.unique", date.time.col = "Time", transect.sub.name = "TransectID",size.name ="Count", xyprojection=NULL)
+                        strata.cols =  c(), enviro.covars = c(), lon.col = "Lon", lat.col = "Lat", effort.datetime.col = "date.time",   #strata.cols = c("Area","Migration"),
+                        sighting.no.col = "sighting.no.unique", sight.datetime.col = "Time", transect.sub.name = "TransectID",size.name ="Count", xyprojection=NULL)
 {
   #
   #Input/arguments
@@ -24,7 +24,7 @@ MakeSegue <- function(sightings, effort, trunc.dist=3000, truncate_sdata=T, alon
   # transect.sub.name = which column (as a text string), which has the continous chunks of effort. This could be the entire transect, if there were no 'off effort' bits
   #                     within a single transect. Otherwise, you'll have to have gone through the effort to work out unique chunks of effort time that were either on or off effort.
   # size.name = which column (as a text string) has the group size information for each sighting?
-  # xyprojection =
+  # xyprojection = The R projection string if you want to work with projection
 
 
 
@@ -81,12 +81,12 @@ MakeSegue <- function(sightings, effort, trunc.dist=3000, truncate_sdata=T, alon
     # TRANSECT SEGMENTATION -----------------------------------------------------------
     #Run the 'transect.segmentation.f' function to segment the effort data into predefined lengths
     segment.summaries.all <- transect.segmentation.f( effort.dataset = effort.2rows, transect.sub.name = transect.sub.name , lon.col = lon.col, lat.col = lat.col,
-                                                              datetime.col = datetime.col, along.track.dist.m = idist, enviro.covars = enviro.covars, strata.cols = strata.cols)
+                                                              datetime.col = eff.datetime.col, along.track.dist.m = idist, enviro.covars = enviro.covars, strata.cols = strata.cols)
 
     # MATCHING SIGHTINGS AND EFFORT -----------------------------------------------------------
     #match sightings at  segment level
     unique.segment.no <- unlist(lapply( sightings$sighting.no.unique, segment.no.per.sighting.f, segment.summary = segment.summaries.all,
-                                                sighting.data = sightings, sighting.no.col = sighting.no.col, date.time.col = date.time.col))
+                                                sighting.data = sightings, sighting.no.col = sighting.no.col, date.time.col = sight.datetime.col))
     datacolm <- paste0('unique.segment.no.',idist,'m')
     sightings[ ,datacolm]<- unique.segment.no
 
