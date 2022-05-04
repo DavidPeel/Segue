@@ -81,7 +81,7 @@ MakeSegue <- function(sightings, effort, trunc.dist=3000, truncate_sdata=T, alon
     # TRANSECT SEGMENTATION -----------------------------------------------------------
     #Run the 'transect.segmentation.f' function to segment the effort data into predefined lengths
     segment.summaries.all <- transect.segmentation.f( effort.dataset = effort.2rows, transect.sub.name = transect.sub.name , lon.col = lon.col, lat.col = lat.col,
-                                                              datetime.col = eff.datetime.col, along.track.dist.m = idist, enviro.covars = enviro.covars, strata.cols = strata.cols)
+                                                              datetime.col = effort.datetime.col, along.track.dist.m = idist, enviro.covars = enviro.covars, strata.cols = strata.cols)
 
     # MATCHING SIGHTINGS AND EFFORT -----------------------------------------------------------
     #match sightings at  segment level
